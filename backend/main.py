@@ -3,8 +3,16 @@ from fastapi import FastAPI,UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from PyPDF2 import PdfReader
 import google.generativeai as genai
+import os
+from dotenv import load_dotenv
 
-GEMEINI_API_KEY = "AIzaSyDs9FxmpjVrxBprcu0ninclhwRwg8TfxLw"
+load_dotenv()
+
+GEMEINI_API_KEY = os.getenv("GEMEINI_API_KEY")
+
+if not GEMEINI_API_KEY:
+    raise ValueError("GEMEINI_API_KEY environment variable not found in .env file")
+
 genai.configure(api_key=GEMEINI_API_KEY)
 
 generation_config = {
